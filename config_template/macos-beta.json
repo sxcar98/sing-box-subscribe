@@ -68,67 +68,27 @@
       },
       {
         "action":"route",
-        "outbound":"PROXY",
-        "domain_keyword":[
-          "github"
-        ]
-      },
-      {
-        "action":"route",
         "outbound":"DIRECT",
         "rule_set":[
-          "geoip-private",
-          "geosite-private",
           "geoip-cn",
-          "geosite-cn",
-          "geoip-apple",
-          "geosite-apple",
-          "geosite-microsoft"
+          "geosite-cn"
         ]
       }
     ],
     "rule_set":[
       {
-        "tag":"geosite-private",
-        "type":"remote",
-        "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs"
-      },
-      {
-        "tag":"geoip-private",
-        "type":"remote",
-        "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs"
-      },
-      {
         "tag":"geosite-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
+        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour":"DIRECT"
       },
       {
         "tag":"geoip-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"
-      },
-      {
-        "tag":"geosite-apple",
-        "type":"remote",
-        "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/apple.srs"
-      },
-      {
-        "tag":"geoip-apple",
-        "type":"remote",
-        "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo-lite/geoip/apple.srs"
-      },
-      {
-        "tag":"geosite-microsoft",
-        "type":"remote",
-        "format":"binary",
-        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs"
+        "url":"https://ghproxy.cc/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour":"DIRECT"
       }
     ]
   }
