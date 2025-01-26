@@ -1,31 +1,9 @@
 {
     "subscribes":[
         {
-            "url": "URL",
-            "tag": "tag_1",
-            "enabled": true,
-            "emoji": 1,
-            "subgroup": "",
-            "prefix": "",
-            "User-Agent":"v2rayng"
-        },
-        {
-            "url": "URL",
-            "tag": "tag_2",
-            "enabled": false,
-            "emoji": 0,
-            "subgroup": "命名/named",
-            "prefix": "❤️",
-            "User-Agent":"clashmeta"
+            "url": "https://sub.nexconvert.com/?L2Rvd25sb2FkQ29uZmlnL0NsYXNoLmFzcHg/ZXE9bWFjJnVyaz1lYmRhNDliMy0wYjIzLTRjZjYtYTc4Zi1lMGEwYjY3MGQ4MGYmbW09MjU4NTE2JjVhNw==",
+            "tag": "Nexitally"
         }
     ],
-    "auto_set_outbounds_dns":{
-        "proxy": "",
-        "direct": ""
-    },
-    "save_config_path": "./config.json",
-    "auto_backup": false,
-    "exclude_protocol":"ssr",
-    "config_template": "",
-    "Only-nodes": false
+    "save_config_path": "./config.json"
 }
