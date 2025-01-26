@@ -21,17 +21,14 @@
     "rules":[
       {
         "action":"route",
+        "outbound":"any",
         "server":"dns_direct",
-        "type":"logical",
-        "mode":"or",
-        "rules":[
-          {
-            "outbound":"any"
-          },
-          {
-            "rule_set":"geosite-cn"
-          }
-        ]
+        "disable_cache":true
+      },
+      {
+        "action":"route",
+        "rule_set":"geosite-cn",
+        "server":"dns_direct"
       }
     ]
   },
