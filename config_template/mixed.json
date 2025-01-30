@@ -1,6 +1,6 @@
 {
   "log":{
-    "level":"warn",
+    "level":"info",
     "timestamp":true
   },
   "dns":{
@@ -8,23 +8,21 @@
     "cache_capacity":16384,
     "servers":[
       {
-        "address":"https://8.8.8.8/dns-query",
+        "tag":"dns_proxy",
+        "type":"https",
+        "server":"8.8.8.8",
+        "strategy":"ipv4_only",
         "client_subnet":"219.149.135.188",
-        "strategy":"ipv4_only"
+        "detour":"PROXY"
       },
       {
         "tag":"dns_direct",
-        "address":"219.149.135.188",
+        "type":"udp",
+        "server":"219.149.135.188",
         "detour":"DIRECT"
       }
     ],
     "rules":[
-      {
-        "action":"route",
-        "outbound":"any",
-        "server":"dns_direct",
-        "disable_cache":true
-      },
       {
         "action":"route",
         "rule_set":"geosite-cn",
@@ -36,10 +34,17 @@
     {
       "type":"mixed",
       "listen":"::",
-      "listen_port":7890
+      "listen_port":42298
     }
   ],
   "outbounds":[
+    {
+      "tag":"DIRECT",
+      "type":"direct",
+      "domain_resolver": {
+        "server": "dns_direct"
+      }
+    },
     {
       "tag":"PROXY",
       "type":"urltest",
@@ -57,13 +62,11 @@
       "url":"http://www.gstatic.com/generate_204",
       "interval":"10m",
       "tolerance":50
-    },
-    {
-      "tag":"DIRECT",
-      "type":"direct"
     }
   ],
   "route":{
+    "default_domain_resolver":"dns_proxy",
+    "final":"PROXY",
     "rules":[
       {
         "action":"sniff"
