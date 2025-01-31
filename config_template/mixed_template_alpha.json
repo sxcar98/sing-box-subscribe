@@ -1,0 +1,98 @@
+{
+  "log":{
+    "level":"info",
+    "timestamp":true
+  },
+  "dns":{
+    "disable_expire":true,
+    "cache_capacity": 65536,
+    "servers": [
+      {
+        "tag": "Google",
+        "type": "https",
+        "server": "8.8.8.8",
+        "detour":"PROXY"
+      },
+      {
+        "tag": "TELECOM",
+        "type": "udp",
+        "server": "219.149.135.188",
+        "detour": "DIRECT"
+      }
+    ],
+    "rules": [
+      {
+        "action": "route",
+        "rule_set": "geosite-cn",
+        "server": "TELECOM"
+      }
+    ],
+    "final":"Google",
+    "strategy":"ipv4_only"
+  },
+  "inbounds":[
+    {
+      "tag":"mixed-in",
+      "type":"mixed",
+      "listen":"::",
+      "listen_port":42298
+    }
+  ],
+  "outbounds":[
+    {
+      "tag":"PROXY",
+      "type":"urltest",
+      "outbounds":[
+        "{all}"
+      ],
+      "filter":[
+        {
+          "action":"exclude",
+          "keywords":[
+            "网站|地址|剩余|过期|时间|有效|Premium"
+          ]
+        }
+      ],
+      "url":"http://www.gstatic.com/generate_204",
+      "interval":"10m",
+      "tolerance":50
+    }
+  ],
+  "route":{
+    "domain_resolver":"Google",
+    "rules":[
+      {
+        "action":"sniff"
+      },
+      {
+        "action":"hijack-dns",
+        "protocol":"dns"
+      },
+      {
+        "action":"route",
+        "outbound":"DIRECT",
+        "rule_set":[
+          "geoip-cn",
+          "geosite-cn"
+        ]
+      }
+    ],
+    "rule_set":[
+      {
+        "tag":"geosite-cn",
+        "type":"remote",
+        "format":"binary",
+        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour":"PROXY"
+      },
+      {
+        "tag":"geoip-cn",
+        "type":"remote",
+        "format":"binary",
+        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour":"PROXY"
+      }
+    ],
+    "final":"PROXY"
+  }
+}
