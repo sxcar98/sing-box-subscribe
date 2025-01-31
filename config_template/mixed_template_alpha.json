@@ -4,35 +4,27 @@
     "timestamp":true
   },
   "dns":{
-    "disable_expire":true,
     "cache_capacity": 65536,
+    "client_subnet":"219.149.135.188",
     "servers": [
       {
-        "tag": "Google",
         "type": "https",
-        "server": "8.8.8.8",
-        "detour":"PROXY"
+        "server": "8.8.8.8"
       },
       {
-        "tag": "TELECOM",
-        "type": "udp",
-        "server": "219.149.135.188",
-        "detour": "DIRECT"
+        "tag":"LocalDNS",
+        "type": "local"
       }
     ],
     "rules": [
       {
-        "action": "route",
         "rule_set": "geosite-cn",
-        "server": "TELECOM"
+        "server": "LocalDNS"
       }
-    ],
-    "final":"Google",
-    "strategy":"ipv4_only"
+    ]
   },
   "inbounds":[
     {
-      "tag":"mixed-in",
       "type":"mixed",
       "listen":"::",
       "listen_port":42298
@@ -40,7 +32,6 @@
   ],
   "outbounds":[
     {
-      "tag":"PROXY",
       "type":"urltest",
       "outbounds":[
         "{all}"
@@ -56,10 +47,14 @@
       "url":"http://www.gstatic.com/generate_204",
       "interval":"10m",
       "tolerance":50
+    },
+    {
+      "tag":"DIRECT",
+      "type":"direct"
     }
   ],
   "route":{
-    "domain_resolver":"Google",
+    "default_domain_resolver":"LocalDNS",
     "rules":[
       {
         "action":"sniff"
@@ -69,7 +64,6 @@
         "protocol":"dns"
       },
       {
-        "action":"route",
         "outbound":"DIRECT",
         "rule_set":[
           "geoip-cn",
@@ -82,17 +76,14 @@
         "tag":"geosite-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
-        "download_detour":"PROXY"
+        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
       },
       {
         "tag":"geoip-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
-        "download_detour":"PROXY"
+        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"
       }
-    ],
-    "final":"PROXY"
+    ]
   }
 }
