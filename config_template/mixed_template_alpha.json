@@ -4,23 +4,25 @@
     "timestamp":true
   },
   "dns":{
-    "cache_capacity": 65536,
+    "cache_capacity":65536,
     "client_subnet":"219.149.135.188",
     "strategy":"ipv4_only",
-    "servers": [
+    "servers":[
       {
-        "type": "https",
-        "server": "8.8.8.8",
+        "type":"udp",
+        "server":"8.8.8.8"
       },
       {
-        "tag":"localDNS",
-        "type": "local"
+        "tag":"h3cDNS",
+        "type":"udp",
+        "server":"192.168.1.1",
+        "detour":"DIRECT"
       }
     ],
-    "rules": [
+    "rules":[
       {
-        "rule_set": "geosite-cn",
-        "server": "localDNS"
+        "rule_set":"geosite-cn",
+        "server":"h3cDNS"
       }
     ]
   },
@@ -34,7 +36,8 @@
   "outbounds":[
     {
       "type":"urltest",
-      "interval":"5s",
+      "interval":"30s",
+      "tolerance":10,
       "outbounds":[
         "{all}"
       ],
@@ -53,7 +56,7 @@
     }
   ],
   "route":{
-    "default_domain_resolver":"localDNS",
+    "default_domain_resolver":"h3cDNS",
     "rules":[
       {
         "action":"sniff"
