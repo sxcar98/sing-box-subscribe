@@ -6,11 +6,11 @@
   "dns":{
     "disable_expire":true,
     "cache_capacity":65536,
+    "strategy":"ipv4_only",
     "servers":[
       {
         "address":"https://8.8.8.8/dns-query",
-        "client_subnet":"219.149.135.188",
-        "strategy":"ipv4_only"
+        "client_subnet":"219.149.135.188"
       },
       {
         "tag":"dns_direct",
