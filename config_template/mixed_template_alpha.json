@@ -10,17 +10,17 @@
     "servers": [
       {
         "type": "https",
-        "server": "8.8.8.8"
+        "server": "8.8.8.8",
       },
       {
-        "tag":"LocalDNS",
+        "tag":"localDNS",
         "type": "local"
       }
     ],
     "rules": [
       {
         "rule_set": "geosite-cn",
-        "server": "LocalDNS"
+        "server": "localDNS"
       }
     ]
   },
@@ -53,7 +53,7 @@
     }
   ],
   "route":{
-    "default_domain_resolver":"LocalDNS",
+    "default_domain_resolver":"localDNS",
     "rules":[
       {
         "action":"sniff"
@@ -75,13 +75,15 @@
         "tag":"geosite-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
+        "url":"https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour":"DIRECT"
       },
       {
         "tag":"geoip-cn",
         "type":"remote",
         "format":"binary",
-        "url":"https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs"
+        "url":"https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour":"DIRECT"
       }
     ]
   }
