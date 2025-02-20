@@ -1,16 +1,19 @@
 {
   "log":{
-    "level":"debug",
+    "level":"info",
     "timestamp":true
   },
   "dns":{
     "cache_capacity":65536,
     "client_subnet":"219.149.135.188",
     "strategy":"ipv4_only",
+    "final":"GoogleDNS",
     "servers":[
       {
-        "type":"udp",
-        "server":"8.8.8.8"
+        "tag":"GoogleDNS",
+        "type":"tls",
+        "server":"8.8.8.8",
+        "detour":"PROXY"
       },
       {
         "tag":"h3cDNS",
@@ -28,6 +31,7 @@
   },
   "inbounds":[
     {
+      "tag":"mixed-in",
       "type":"mixed",
       "listen":"0.0.0.0",
       "listen_port":42298
@@ -35,9 +39,10 @@
   ],
   "outbounds":[
     {
+      "tag":"PROXY",
       "type":"urltest",
       "interval":"30s",
-      "tolerance":10,
+      "tolerance":20,
       "outbounds":[
         "{all}"
       ],
@@ -57,6 +62,7 @@
   ],
   "route":{
     "default_domain_resolver":"h3cDNS",
+    "final":"PROXY",
     "rules":[
       {
         "action":"sniff"
@@ -64,6 +70,14 @@
       {
         "action":"hijack-dns",
         "protocol":"dns"
+      },
+      {
+        "outbound":"DIRECT",
+        "ip_is_private":true
+      },
+      {
+        "outbound":"DIRECT",
+        "protocol":"bittorrent"
       },
       {
         "outbound":"DIRECT",
