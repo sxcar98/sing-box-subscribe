@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__, template_folder='../templates')  # 指定模板文件夹的路径
 app.secret_key = 'sing-box'  # 替换为实际的密钥
 data_json = {}
-os.environ['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"https://sub.kwk7thgc.com/?L1N1YnNjcmlwdGlvbi9DbGFzaD9zaWQ9NzE2MzQmdG9rZW49T1p1YmxWQzBydEgmbW09ODE3MjAmNjIxZWYwMTdk","tag":"AmyTelecom"}],"save_config_path":"./config.json"}'
+os.environ['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"https://dy.tsmpi.xyz/api/v1/client/subscribe?token=777bbf424404ab51298cb1052c5e4814","tag":"AmyTelecom"}],"save_config_path":"./config.json"}'
 data_json['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"URL","tag":"tag_1","enabled":true,"emoji":1,"subgroup":"","prefix":"","User-Agent":"v2rayng"},{"url":"URL","tag":"tag_2","enabled":false,"emoji":0,"subgroup":"命名/named","prefix":"❤️","User-Agent":"clashmeta"}],"auto_set_outbounds_dns":{"proxy":"","direct":""},"save_config_path":"./config.json","auto_backup":false,"exclude_protocol":"ssr","config_template":"","Only-nodes":false}'
 
 # 获取系统默认的临时目录路径
