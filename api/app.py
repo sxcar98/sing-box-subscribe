@@ -195,6 +195,7 @@ def config(url):
     pre_param = request.args.get('prefix', '')
     eps_param = request.args.get('eps', '')
     enn_param = request.args.get('enn', '')
+    gh_proxy_param = request.args.get('gh', '')
 
     # 构建要删除的字符串列表
     params_to_remove = [
@@ -205,6 +206,7 @@ def config(url):
         f'file={file_param}',
         f'&emoji={emoji_param}',
         f'&tag={tag_param}',
+        f'&gh={gh_proxy_param}',
         f'&eps={quote(eps_param)}',
         f'&enn={quote(enn_param)}'
     ]
@@ -250,18 +252,21 @@ def config(url):
     #return page_content
     try:
         selected_template_index = '0'
+        selected_gh_proxy_index = ''
         if file_param.isdigit():
             temp_json_data['config_template'] = ''
             selected_template_index = str(int(file_param) - 1)
+        if gh_proxy_param.isdigit():
+            selected_gh_proxy_index = str(int(gh_proxy_param) - 1)
         temp_json_data = json.dumps(json.dumps(temp_json_data, indent=4, ensure_ascii=False), indent=4, ensure_ascii=False)
-        subprocess.check_call([sys.executable, 'main.py', '--template_index', selected_template_index, '--temp_json_data', temp_json_data])
+        subprocess.check_call([sys.executable, 'main.py', '--template_index', selected_template_index, '--temp_json_data', temp_json_data, '--gh_proxy_index', selected_gh_proxy_index])
         CONFIG_FILE_NAME = json.loads(os.environ['TEMP_JSON_DATA']).get("save_config_path", "config.json")
         if CONFIG_FILE_NAME.startswith("./"):
             CONFIG_FILE_NAME = CONFIG_FILE_NAME[2:]
         # 设置配置文件的完整路径
-        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME)
+        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME) 
         if not os.path.exists(config_file_path):
-            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径
+            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径 
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         # 读取配置文件内容
         with open(config_file_path, 'r', encoding='utf-8') as config_file:
@@ -274,7 +279,7 @@ def config(url):
     except subprocess.CalledProcessError as e:
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         return Response(json.dumps({'status': 'error'}, indent=4,ensure_ascii=False), content_type='application/json; charset=utf-8', status=500)
-        #return jsonify({'status': 'error', 'message': str(e)})
+        #return jsonify({'status': 'error', 'message': str(e)}) 
     except Exception as e:
         #flash(f'Error occurred while generating the configuration file: {str(e)}', 'error')
         return Response(json.dumps({'status': 'error', 'message_CN': '认真看刚刚的网页说明、github写的reademe文件;', 'message_VN': 'Quá thời gian phân tích đăng ký: Vui lòng kiểm tra xem liên kết đăng ký có chính xác không hoặc vui lòng chuyển sang "nogroupstemplate" và thử lại; Vui lòng không chỉnh sửa giá trị "tag", trừ khi bạn hiểu nó làm gì;', 'message_EN': 'Subscription parsing timeout: Please check if the subscription link is correct or please change to "no_groups_template" and try again; Please do not modify the "tag" value unless you understand what it does;'}, indent=4,ensure_ascii=False), content_type='application/json; charset=utf-8', status=500)
@@ -294,9 +299,9 @@ def generate_config():
         if CONFIG_FILE_NAME.startswith("./"):
             CONFIG_FILE_NAME = CONFIG_FILE_NAME[2:]
         # 设置配置文件的完整路径
-        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME)
+        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME) 
         if not os.path.exists(config_file_path):
-            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径
+            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径 
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         # 读取配置文件内容
         with open(config_file_path, 'r', encoding='utf-8') as config_file:
