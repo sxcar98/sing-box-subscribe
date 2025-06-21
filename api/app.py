@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__, template_folder='../templates')  # 指定模板文件夹的路径
 app.secret_key = 'sing-box'  # 替换为实际的密钥
 data_json = {}
-os.environ['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"https://sub.kwk7thgc.com/?L1N1YnNjcmlwdGlvbi9DbGFzaD9zaWQ9NzIxMjEmdG9rZW49UFZaNVRydUtTbFcmbW09ODIyMDcmNTg3ZDdiZDg5ZjlhNDU5ZGFiNjgxODIyZjYxMWZi","tag":"AmyTelecom"}],"save_config_path":"./config.json"}'
+os.environ['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"https://sub.kwk7thgc.com/?L1N1YnNjcmlwdGlvbi9TaW5nYm94P3Q9MjAyMiZzaWQ9NzY2NDUmdG9rZW49YUc0TzFYTWNBTkUmbW09ODY3MzEmOWI=","tag":"AmyTelecom"}],"save_config_path":"./config.json"}'
 data_json['TEMP_JSON_DATA'] = '{"subscribes":[{"url":"URL","tag":"tag_1","enabled":true,"emoji":1,"subgroup":"","prefix":"","User-Agent":"v2rayng"},{"url":"URL","tag":"tag_2","enabled":false,"emoji":0,"subgroup":"命名/named","prefix":"❤️","User-Agent":"clashmeta"}],"auto_set_outbounds_dns":{"proxy":"","direct":""},"save_config_path":"./config.json","auto_backup":false,"exclude_protocol":"ssr","config_template":"","Only-nodes":false}'
 
 # 获取系统默认的临时目录路径
@@ -264,9 +264,9 @@ def config(url):
         if CONFIG_FILE_NAME.startswith("./"):
             CONFIG_FILE_NAME = CONFIG_FILE_NAME[2:]
         # 设置配置文件的完整路径
-        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME) 
+        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME)
         if not os.path.exists(config_file_path):
-            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径 
+            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         # 读取配置文件内容
         with open(config_file_path, 'r', encoding='utf-8') as config_file:
@@ -279,7 +279,7 @@ def config(url):
     except subprocess.CalledProcessError as e:
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         return Response(json.dumps({'status': 'error'}, indent=4,ensure_ascii=False), content_type='application/json; charset=utf-8', status=500)
-        #return jsonify({'status': 'error', 'message': str(e)}) 
+        #return jsonify({'status': 'error', 'message': str(e)})
     except Exception as e:
         #flash(f'Error occurred while generating the configuration file: {str(e)}', 'error')
         return Response(json.dumps({'status': 'error', 'message_CN': '认真看刚刚的网页说明、github写的reademe文件;', 'message_VN': 'Quá thời gian phân tích đăng ký: Vui lòng kiểm tra xem liên kết đăng ký có chính xác không hoặc vui lòng chuyển sang "nogroupstemplate" và thử lại; Vui lòng không chỉnh sửa giá trị "tag", trừ khi bạn hiểu nó làm gì;', 'message_EN': 'Subscription parsing timeout: Please check if the subscription link is correct or please change to "no_groups_template" and try again; Please do not modify the "tag" value unless you understand what it does;'}, indent=4,ensure_ascii=False), content_type='application/json; charset=utf-8', status=500)
@@ -299,9 +299,9 @@ def generate_config():
         if CONFIG_FILE_NAME.startswith("./"):
             CONFIG_FILE_NAME = CONFIG_FILE_NAME[2:]
         # 设置配置文件的完整路径
-        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME) 
+        config_file_path = os.path.join('/tmp/', CONFIG_FILE_NAME)
         if not os.path.exists(config_file_path):
-            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径 
+            config_file_path = CONFIG_FILE_NAME  # 使用相对于当前工作目录的路径
         os.environ['TEMP_JSON_DATA'] = json.dumps(json.loads(data_json['TEMP_JSON_DATA']), indent=4, ensure_ascii=False)
         # 读取配置文件内容
         with open(config_file_path, 'r', encoding='utf-8') as config_file:

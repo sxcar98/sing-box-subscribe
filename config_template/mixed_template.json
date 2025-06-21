@@ -15,6 +15,32 @@
          "enabled":true
       }
    },
+   "dns":{
+      "final":"GoogleDNS",
+      "cache_capacity":65536,
+      "client_subnet":"219.149.135.188",
+      "strategy":"ipv4_only",
+      "servers":[
+         {
+            "tag":"GoogleDNS",
+            "type":"tls",
+            "server":"8.8.8.8",
+            "detour":"PROXY"
+         },
+         {
+            "tag":"routerDNS",
+            "type":"udp",
+            "server":"192.168.1.1",
+            "detour":"DIRECT"
+         }
+      ],
+      "rules":[
+         {
+            "rule_set":"geosite-cn",
+            "server":"routerDNS"
+         }
+      ]
+   },
    "inbounds":[
       {
          "type":"mixed",
