@@ -3,7 +3,7 @@
         {
             "url": "https://sub.kwk7thgc.com/?L1N1YnNjcmlwdGlvbi9TaW5nYm94P3Q9MjAyMiZzaWQ9NzY2NDUmdG9rZW49YUc0TzFYTWNBTkUmbW09ODY3MzEmOWI=",
             "tag": "AmyTelecom",
-            "ex-node-name": "网站|流量|过期"
+            "ex-node-name": "网站|流量|过期|到期"
         }
     ],
     "save_config_path": "./config.json"
